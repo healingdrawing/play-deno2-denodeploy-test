@@ -9,17 +9,17 @@ export const FRONTHOST:string = get_env_variable("FRONTHOST", true)
 
 /**
  * Checks if an environment variable exists and logs it. If it does not exist
- * or is empty, exits with code 2.
+ * or is empty, throws error.
  * @param name The name of the environment variable to check.
  * @param check_url If true, checks if the value of the environment variable is
- * a valid url. If it is not, exits with code 2.
+ * a valid url. If it is not, throws error.
  * @returns The value of the environment variable.
  */
 export function get_env_variable(name:string, check_url:boolean = false) {
   const raw = Deno.env.get(name)
   if (raw === undefined || raw === ""){
     console.log(dprint("ENV ERROR", `${name} is undefined`))
-    Deno.exit(2)
+    throw new Error(`ENV ERROR: ${name} is undefined`)
   } 
   console.log(dprint(name, raw))
   
@@ -28,6 +28,6 @@ export function get_env_variable(name:string, check_url:boolean = false) {
     return raw
   }catch{
     console.log(dprint("ENV ERROR", `${name} url is incorrect`))
-    Deno.exit(2)
+    throw new Error(`ENV ERROR: ${name} url is incorrect`)
   }
 }
