@@ -1,8 +1,8 @@
-import {Hono, csrf, cors, home} from "./deps.ts"
+import {Hono, csrf, cors, home, BACKHOST, FRONTHOST} from "./deps.ts"
 
 const app = new Hono()
-app.use(csrf({ origin: ['http://localhost:8000'], }))
-app.use(cors({ origin: ['http://localhost:3000'], }))
+app.use(csrf({ origin: [BACKHOST], }))
+app.use(cors({ origin: [FRONTHOST], }))
 
 app.route('/', home)
 
